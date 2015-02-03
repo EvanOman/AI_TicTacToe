@@ -9,6 +9,108 @@ public class tictactoe
 	}
 }
 
+enum moveOutcome {
+	SUCCESS, OUTOFRANGE, SPACETAKEN
+}
+
+class game
+{
+	private humanPlayer human;
+	private computerPlayer computer;
+	private gameBoard board;
+	private moveOutcome outcome;
+	private int numMoves = 0;
+	private boolean gameOver;
+
+	public game()
+	{
+		human = new humanPlayer("Jeff", 'o');
+		computer = new computerPlayer("HAL", 'x');
+		board = new gameBoard();
+	}
+
+	public void playGame()
+	{
+		//while (!)
+	}
+
+}
+
+class player
+{
+	public String playerName;
+	public char playerCharacter;
+
+	public player(String name, char character)
+	{
+		playerName = name;
+		playerCharacter = character;
+	}
+
+	public int makeMove(gameBoard board)
+	{
+		char[] squares = board.getSquares();
+
+		for (int i = 0; i < squares.length; i++)
+		{
+			if (squares[i] == '_')
+			{
+				return i;
+			}
+		}
+		/* Default failure case, shouldn't ever happen */
+		return -1;
+	}
+}
+
+class humanPlayer extends player
+{
+	public humanPlayer(String name, char character)
+	{
+		super(name, character);
+	}
+
+	/* Prompts the user for a move */
+	public int makeMove(gameBoard board)
+	{
+		char[] squares = board.getSquares();
+
+		for (int i = 0; i < squares.length; i++)
+		{
+			if (squares[i] == '_')
+			{
+				return i;
+			}
+		}
+		/* Default failure case, shouldn't ever happen */
+		return -1;
+	}
+}
+
+class computerPlayer extends player
+{
+	public computerPlayer(String name, char character)
+	{
+		super(name, character);
+	}
+
+	/* Reads the game board and follows the prescribed strategy */
+	public int makeMove(gameBoard board)
+	{
+		char[] squares = board.getSquares();
+
+		for (int i = 0; i < squares.length; i++)
+		{
+			if (squares[i] == '_')
+			{
+				return i;
+			}
+		}
+		/* Default failure case, shouldn't ever happen */
+		return -1;
+	}
+}
+
 class gameBoard
 {
 	/*
@@ -23,18 +125,23 @@ class gameBoard
 		Internal representation of the game board where indices 1-9 represent the spaces on the board
 	*/
 	public final int boardSize;
-	public char[] squares;
+	private char[] squares;
+	private moveOutcome outcome;
+	
+
 
 	public gameBoard()
 	{
 		boardSize = 9;
 		squares = new char[boardSize + 1];
-		Arrays.fill(squares, ' ');
-		squares[1] = 'o';
-		squares[5] = 'o';
-		squares[9] = 'o';
+		Arrays.fill(squares, '_');
 	}
 
+	/* Returns a list of open squares */
+	public char[] getSquares()
+	{
+		return squares;
+	}
 
 	public void printBoard()
 	{
@@ -48,23 +155,29 @@ class gameBoard
 			}
 			else if (i % 9 != 0)
 			{
-				System.out.print("\n---------\n");
+				System.out.print("\n-----------\n");
 			}
 		}
+		System.out.println();
 	}
-}
 
-//class employee extends person
-//{
-//	private int EmployeeNumber;
-//	public employee(String surname, int age, boolean ismale, int employeenumber)
-//	{
-//		super(surname, age, ismale);
-//		EmployeeNumber = employeenumber;
-//	}
-//
-//	@Override public String toString()
-//	{
-//		return Surname + " is a " + Age + " year old employee with Employee Number: " + EmployeeNumber;
-//	}
-//}
+	/* Attempts to make a move on the board */
+	public moveOutcome applyMarker(int position, char marker)
+	{
+		if (position < 1 || position > 9)
+		{
+			return outcome.OUTOFRANGE;
+		}
+		else if (squares[position] != '_')
+		{
+			return outcome.SPACETAKEN;
+		}
+		else
+		{
+			squares[position] = marker;
+			return outcome.SUCCESS;
+		}
+	}
+
+
+}
