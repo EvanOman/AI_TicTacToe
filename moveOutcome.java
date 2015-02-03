@@ -1,0 +1,4 @@
+public enum moveOutcome
+{
+	SUCCESS, UNSUCCESS, OUTOFRANGE, SPACETAKEN
+}
