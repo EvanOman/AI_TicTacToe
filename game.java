@@ -6,10 +6,8 @@ public class game
 
 	public game()
 	{
-		humanPlayer human = new humanPlayer("Human", 'o');
-		computerPlayer computer = new computerPlayer("HAL", 'x');
-		players[0] = human;
-		players[1] = computer;
+		players[0] = new humanPlayer("Human", 'o');;
+		players[1] = new computerPlayer("HAL", 'x');;
 		board = new gameBoard(3);
 		status = gameStatus.ONGOING;
 	}
@@ -18,7 +16,7 @@ public class game
 	{
 		int turnMarker = 0;
 		player currentPlayer = players[0];
-		while (status == gameStatus.ONGOING)
+		do
 		{
 			currentPlayer = players[turnMarker % 2];
 			moveOutcome outcome = moveOutcome.UNSUCCESS;
@@ -31,7 +29,7 @@ public class game
 			board.printBoard();
 			updateGameStatus();
 			turnMarker++;
-		}
+		} while (status == gameStatus.ONGOING);
 
 		if (status == gameStatus.CATGAME)
 		{

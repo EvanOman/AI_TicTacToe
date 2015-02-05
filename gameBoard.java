@@ -82,13 +82,8 @@ public class gameBoard
 		}
 	}
 
+	/* Checks if the current board has any winning combinations */
 	public boolean hasWinningConfig()
-	{
-		return (/*checkDiag() ||*/ checkNonDiag());
-	}
-
-	/* Loops over the rows/cols looking for a row with the same char */
-	private boolean checkNonDiag()
 	{
 		return (checkLines(winningRows) || checkLines(transpose(winningRows)) || checkLines(winningDiag));
 	}
@@ -146,12 +141,6 @@ public class gameBoard
 				return true;
 			}
 		}
-		return false;
-	}
-
-	/* Loops over the columns looking for */
-	private boolean checkDiag()
-	{
 		return false;
 	}
 
