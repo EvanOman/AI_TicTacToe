@@ -1,19 +1,21 @@
+package com.evan.tictactoe;
+
 import java.util.Scanner;
 
-/* Abstract player class from which human and AI will inherit */
-public abstract class player
+/* Abstract com.evan.TicTacToe.Player class from which human and AI will inherit */
+public abstract class Player
 {
 	public String playerName;
 	public char playerCharacter;
 
-	public player(String name, char character)
+	public Player(String name, char character)
 	{
 		playerName = name;
 		playerCharacter = character;
 	}
 
-	/* A default(bad) strategy that any player can play */
-	public int makeMove(gameBoard board)
+	/* A default(bad) strategy that any com.evan.TicTacToe.Player can play */
+	public int makeMove(GameBoard board)
 	{
 		char[] squares = board.getSquares();
 
@@ -29,17 +31,17 @@ public abstract class player
 	}
 }
 
-/* Class defining the operation of the human player */
-class humanPlayer extends player
+/* Class defining the operation of the human com.evan.TicTacToe.Player */
+class HumanPlayer extends Player
 {
 	private Scanner keyboard = new Scanner(System.in);
-	public humanPlayer(String name, char character)
+	public HumanPlayer(String name, char character)
 	{
 		super(name, character);
 	}
 
 	/* Prompts the user for a move */
-	public int makeMove(gameBoard board)
+	public int makeMove(GameBoard board)
 	{
 		System.out.print("Please choose a square: ");
 		return keyboard.nextInt();
@@ -51,20 +53,20 @@ enum strategyType
 	MINMAX, SIMPLE
 }
 
-/* Class defining the operation of the computer player */
-class computerPlayer extends player
+/* Class defining the operation of the computer com.evan.TicTacToe.Player */
+class ComputerPlayer extends Player
 {
 	/* Enum for the strategy type, either simple or minmax */
 	private strategyType strategy;
 
-	public computerPlayer(String name, char character, String strat)
+	public ComputerPlayer(String name, char character, String strat)
 	{
 		super(name, character);
 		strategy = strat == "minMax" ? strategyType.MINMAX : strategyType.SIMPLE;
 	}
 
 	/* AI makes move according to its strategy mode */
-	public int makeMove(gameBoard board)
+	public int makeMove(GameBoard board)
 	{
 		//return super.makeMove(board);
 
@@ -93,7 +95,7 @@ class computerPlayer extends player
 			7. Take an empty 'side' square if available
 			8. Take any open square
 	*/
-	private int followSimple(gameBoard board)
+	private int followSimple(GameBoard board)
 	{
 		int move;
 		if ((move = board.findWiningSpace(playerCharacter)) != -1)
@@ -124,13 +126,13 @@ class computerPlayer extends player
 	}
 
 	/* Wrapper for the super's default move behavior */
-	private int findEmptySquare(gameBoard board)
+	private int findEmptySquare(GameBoard board)
 	{
 		return super.makeMove(board);
 	}
 
 	/* Will eventually hold my implementation of the MinMax search algorithm for Tic Tac Toe */
-	private int followMinMax(gameBoard board)
+	private int followMinMax(GameBoard board)
 	{
 		return -1;
 	}

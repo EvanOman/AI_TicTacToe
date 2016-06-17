@@ -1,9 +1,11 @@
+package com.evan.tictactoe;
+
 import java.util.Arrays;
 
-public class gameBoard
+public class GameBoard
 {
 	/* 
-		Internal representation of the game board where indices 1-9 represent the spaces on the board
+		Internal representation of the com.evan.TicTacToe.Game board where indices 1-9 represent the spaces on the board
 	*/
 	public final int boardDim;
 	public final int boardSize;
@@ -14,7 +16,7 @@ public class gameBoard
 	private int[][] winningDiag;
 
 	/* Constructor, sets everything up and get the board ready for use */
-	public gameBoard(int boardDimension, char[] playerCharacters)
+	public GameBoard(int boardDimension, char[] playerCharacters)
 	{
 		boardDim = boardDimension;
 		boardSize = boardDim * boardDim;
@@ -59,36 +61,36 @@ public class gameBoard
 	}
 
 	/* Attempts to make a move on the board */
-	public moveOutcome applyMarker(int position, char marker)
+	public MoveOutcome applyMarker(int position, char marker)
 	{
 		if (position < 1 || position > boardSize)
 		{
 			System.out.println("Please choose a position between 1 and 9.");
-			return moveOutcome.OUTOFRANGE;
+			return MoveOutcome.OUTOFRANGE;
 		}
 		else if (squares[position] != BLANKSPACE)
 		{
-			return moveOutcome.SPACETAKEN;
+			return MoveOutcome.SPACETAKEN;
 		}
 		else
 		{
 			squares[position] = marker;
-			return moveOutcome.SUCCESS;
+			return MoveOutcome.SUCCESS;
 		}
 	}
 
 	/* Clears the given space on the board */
-	private moveOutcome clearSpace(int position)
+	private MoveOutcome clearSpace(int position)
 	{
 		if (position < 1 || position > boardSize)
 		{
 			System.out.println("Please choose a position between 1 and 9.");
-			return moveOutcome.OUTOFRANGE;
+			return MoveOutcome.OUTOFRANGE;
 		}
 		else
 		{
 			squares[position] = BLANKSPACE;
-			return moveOutcome.SUCCESS;
+			return MoveOutcome.SUCCESS;
 		}
 	}
 
@@ -103,7 +105,7 @@ public class gameBoard
 	{
 		/*
 			How this works is I have matrices called winningLines whose rows define
-			an n-tuple of indices where if the game board contains the same, non-blank
+			an n-tuple of indices where if the com.evan.TicTacToe.Game board contains the same, non-blank
 			symbol in each index, then that symbol has a winning configuration
 		*/
 		for (int row = 0; row < winningLines.length; row++)
@@ -204,19 +206,19 @@ public class gameBoard
 		return matrix;
 	}
 
-	/* Finds the space that player with marker playerChar can use to win */
+	/* Finds the space that com.evan.TicTacToe.Player with marker playerChar can use to win */
 	public int findWiningSpace(char playerChar)
 	{
 		/*
-			The way this works is we simply apply this player's char to every open space
-			to see if there is one move that gives this player the win. If we find one
+			The way this works is we simply apply this com.evan.TicTacToe.Player's char to every open space
+			to see if there is one move that gives this com.evan.TicTacToe.Player the win. If we find one
 			that is the index that we return
 		*/
 		for (int index = 1; index <= boardSize; index++)
 		{
-			if (applyMarker(index, playerChar) == moveOutcome.SUCCESS)
+			if (applyMarker(index, playerChar) == MoveOutcome.SUCCESS)
 			{
-				/* Find out if the application of that char won the game */
+				/* Find out if the application of that char won the com.evan.TicTacToe.Game */
 				boolean introducedWin = hasWinningConfig();
 
 				/* Make sure that we undo the move before returning */
@@ -236,16 +238,16 @@ public class gameBoard
 	public int findNumWiningSpaces(char playerChar)
 	{
 		/*
-			The way this works is we simply apply this player's char to every open space
-			to see if there is one move that gives this player the win. If we find one
+			The way this works is we simply apply this com.evan.TicTacToe.Player's char to every open space
+			to see if there is one move that gives this com.evan.TicTacToe.Player the win. If we find one
 			that is the index that we return
 		*/
 		int numWinningSpaces = 0;
 		for (int index = 1; index <= boardSize; index++)
 		{
-			if (applyMarker(index, playerChar) == moveOutcome.SUCCESS)
+			if (applyMarker(index, playerChar) == MoveOutcome.SUCCESS)
 			{
-				/* Find out if the application of that char won the game */
+				/* Find out if the application of that char won the com.evan.TicTacToe.Game */
 				boolean introducedWin = hasWinningConfig();
 
 				/* Make sure that we undo the move before returning */
@@ -268,15 +270,15 @@ public class gameBoard
 		return findWiningSpace(otherPlayerChar);
 	}
 
-	/* Finds a position which gives the player a fork */
+	/* Finds a position which gives the com.evan.TicTacToe.Player a fork */
 	public int findForkingSpace(char playerChar)
 	{
 		/* Basically we just loop over all squares and if putting a mark in any square introduces two winning configs then we have a fork and we return the square's index */
 		for (int index = 1; index <= boardSize; index++)
 		{
-			if (applyMarker(index, playerChar) == moveOutcome.SUCCESS)
+			if (applyMarker(index, playerChar) == MoveOutcome.SUCCESS)
 			{
-				/* Find out if the application of that char won the game */
+				/* Find out if the application of that char won the com.evan.TicTacToe.Game */
 				int numWinningSpaces = findNumWiningSpaces(playerChar);
 
 				/* Make sure that we undo the move before returning */
@@ -337,7 +339,7 @@ public class gameBoard
 		return -1;
 	}
 
-	/* Given a player's char, this method finds the other player's char */
+	/* Given a com.evan.TicTacToe.Player's char, this method finds the other com.evan.TicTacToe.Player's char */
 	private char findOtherPlayerChar(char playerChar)
 	{
 		/* Loops through the playerChars array and returns the one that isn't passed in */
